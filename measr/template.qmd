@@ -1,0 +1,52 @@
+---
+title: Applied diagnostic <br/> classification modeling
+subtitle: Using the R package measr
+author: W. Jake Thompson, Ph.D.
+title-slide-attributes: 
+  data-background-image: figure/backgrounds/ku-title.png
+  data-background-size: contain
+format:
+  measr-revealjs: default
+---
+
+# Section title
+
+## Default Slide
+
+Here is some **bold** and *italic* text.
+
+* Bullets
+  * And sub-bullets
+* Another bullet
+
+## Columns
+
+:::columns
+:::{.column width="45%"}
+### Left column
+
+- Point 1
+- Point 2
+- Point 3
+:::
+
+:::{.column width="45%"}
+### Right column
+
+- Point 4
+- Point 5
+- Point 6
+:::
+:::
+
+
+## Code
+
+```{r}
+#| echo: TRUE
+#| output-location: column
+library(measr)
+
+create_profiles(5)
+```
+
