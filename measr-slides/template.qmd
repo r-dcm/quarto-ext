@@ -14,14 +14,15 @@ knitr:
 code-link: true
 preload-iframes: true
 code-annotations: select
-# filters:
-#   - lua/output-line-highlight.lua
+filters:
+  - lua/output-line-highlight.lua
 ---
 
 # Section title
 
 ```{r setup}
 library(tidyverse)
+library(countdown)
 library(ggmeasr)
 library(knitr)
 library(measr)
@@ -71,8 +72,27 @@ create_profiles(5)
 
 ## Code annotations
 
-```{r}
+```r
+starwars |>                            # <1>
+  mutate(                              # <2>
+    bmi = mass / ((height / 100) ^ 2), # <2>
+    age_new_hope = birth_year + 4      # <2>
+  )                                    # <2>
+```
+1. Take `starwars`, and then,
+2. add new columns for the BMI and age in "Return of the Jedi"
 
+## Output highlighting
+
+```{r}
+#| class-output: highlight
+#| output-line-numbers: "|3|5,6"
+
+starwars |> 
+  mutate(
+    bmi = mass / ((height / 100) ^ 2),
+    age_new_hope = birth_year + 4
+  )       
 ```
 
 
@@ -80,7 +100,49 @@ create_profiles(5)
 
 Here is an exercise.
 
-# <link.url> {.thank-you data-menu-title="Get in touch" background-color="#023047" background-iframe="grid-worms/index.html"}
+```{r countdown-1}
+countdown(
+  minutes = 3, 
+  seconds = 0,
+  right = "1%", bottom = "14%",
+  color_border              = "#023047",
+  color_background          = "#023047",
+  color_text                = "#8ECAE6",
+  color_running_background  = "#023047",
+  color_running_text        = "#8ECAE6",
+  color_finished_background = "#D7263D",
+  color_finished_text       = "#FFFFFF"
+)
+```
+
+## {.empty data-menu-title="Empty background"}
+
+```{r}
+#| label: big-image
+#| out-width: 100%
+#| fig-alt: "A big image."
+
+include_graphics("figure/measr-hex.png")
+```
+
+
+# {.closing data-menu-title="Closing"}
+
+</br>
+
+:::{.end-title color="white" font-size="200%"}
+Presentation Title
+:::
+
+:::{.end-subtitle}
+Presentation Subtitle
+:::
+
+:::{.center}
+<https://measr.info>
+:::
+
+# <https://measr.info> {.thank-you data-menu-title="Get in touch" background-color="#023047" background-iframe="grid-worms/index.html"}
 
 :::{.columns .v-center-container}
 
