@@ -7,7 +7,7 @@ A [Quarto](https://quarto.org) extension for authoring [measr](https://measr.inf
 To start a new presentation:
 
 ```bash
-quarto use template r-dcm/quarto-ext/measr
+quarto use template r-dcm/quarto-ext/measr-slides
 ```
 
 This will install the extension and create an example qmd file that you can use as a starting place for your article.

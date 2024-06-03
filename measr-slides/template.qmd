@@ -6,7 +6,7 @@ title-slide-attributes:
   data-background-image: figure/backgrounds/ku-title.png
   data-background-size: contain
 format:
-  measr-revealjs: default
+  measr-slides-revealjs: default
 ---
 
 # Section title
