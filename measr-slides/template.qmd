@@ -2,14 +2,33 @@
 title: Applied diagnostic <br/> classification modeling
 subtitle: Using the R package measr
 author: W. Jake Thompson, Ph.D.
-title-slide-attributes: 
-  data-background-image: figure/backgrounds/ku-title.png
-  data-background-size: contain
 format:
-  measr-slides-revealjs: default
+  measr-slides-revealjs:
+    progress: false
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    fig.width: 7
+    fig.asp: 0.618
+    fig.align: "center"
+code-link: true
+preload-iframes: true
+code-annotations: select
+# filters:
+#   - lua/output-line-highlight.lua
 ---
 
 # Section title
+
+```{r setup}
+library(tidyverse)
+library(ggmeasr)
+library(knitr)
+library(measr)
+library(here)
+
+set_theme(plot_margin = margin(5, 0, 0, 0))
+```
 
 ## Default Slide
 
@@ -50,3 +69,46 @@ library(measr)
 create_profiles(5)
 ```
 
+## Code annotations
+
+```{r}
+
+```
+
+
+## Exercise 1 {.exercise}
+
+Here is an exercise.
+
+# <link.url> {.thank-you data-menu-title="Get in touch" background-color="#023047" background-iframe="grid-worms/index.html"}
+
+:::{.columns .v-center-container}
+
+:::{.column .image width="60%"}
+
+![](figure/measr-hex.png){width="50%" fig-alt="Hex logo for the measr R package."}
+
+:::
+
+:::{.column width="40%"}
+
+:::{.thank-you-subtitle}
+
+:::{.small}
+
+{{< fa globe >}} \ [wjakethompson.com](https://wjakethompson.com)  
+{{< fa envelope >}} \ [wjakethompson@ku.edu](mailto:wjakethompson@ku.edu)  
+{{< fa brands linkedin >}} \ [in/wjakethompson](https://linkedin.com/in/wjakethompson)  
+{{< fa brands github >}} \ [@wjakethompson](https://github.com/wjakethompson)  
+{{< fa brands mastodon >}} \ [@wjakethompson@fosstodon.org](https://fosstodon.org/@wjakethompson)  
+{{< fa brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)  
+{{< fa brands threads >}} \ [@wjakethompson.com](https://www.threads.net/@wjakethompson)  
+{{< fa brands x-twitter >}} \ [@wjakethompson](https://twitter.com/wjakethompson)  
+
+:::
+
+:::
+
+:::
+
+:::

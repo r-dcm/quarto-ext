@@ -6,6 +6,7 @@ contributes:
   formats:
     revealjs:
       theme: [default, theme.scss]
+      css: backgrounds.css
       preview-links: auto
       width: 1280
       height: 720
