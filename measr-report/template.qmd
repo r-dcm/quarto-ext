@@ -1,0 +1,123 @@
+---
+title: |
+  Evaluating Diagnostic Classification Models  
+  with {measr}
+date: last-modified
+date-format: "MMMM YYYY"
+format:
+  measr-report-pdf:
+    bibliography: ["bib/refs.bib", "bib/packages.bib"]
+    csl: "bib/apa.csl"
+    internal: true
+    keep-tex: true
+---
+
+# Background
+
+The R package {measr} is an IES-funded project focused on developing software for the estimation and evaluation of diagnostic classification models [DCMs, @bradshaw-dcm; @rupp-dcm].
+The {measr} package is completely free and open source.
+The source code for the package can be found on GitHub at <https://github.com/wjakethompson/measr>.
+Throughout this document, I demonstrate how {measr} is intended to be used.
+If you would like to try the code yourself, instructions for installing the package are included in the repository's README.
+Finally, there is also a project website (<https://measr.info>) which includes documentation for all functions.
+This website will continue to grow with additional documentation and example uses as development continues.
+
+To date, work has focused on developing and releasing the initial version of the R package.
+A previous report to the project advisory board described how {measr} could be used to easily estimate different sub-types of DCMs.
+There have been several updates to the package in response to feedback on the previous report.
+These will not be discussed in detail in this report, but are summarized here:
+
+* The initial version of {measr} has been released to CRAN (the official repository for R packages)! Note that some of the functionality described in this report was added after the initial CRAN release, and therefore is only available in the development version of the package on GitHub. An updated release to CRAN is planned for this summer.
+* Support for additional model specifications has been added:
+  * The compensatory reparameterized unified model \citep[C-RUM;][]{crum} can now be estimated by defining `type = "crum"` in the [`measr_dcm()`](https://measr.info/dev/reference/measr_dcm.html) function.
+  * Users can now drop higher order interactions from the loglinear cognitive diagnostic model \citep[LCDM;][]{lcdm}. A new argument for [`measr_dcm()`](https://measr.info/dev/reference/measr_dcm.html), `max_interaction`, defines the highest order interactions to estimate. For example, `max_interaction = 2` will estimate only intercepts, main effects, and two-way interactions.
+  * A new argument to [`measr_dcm()`](https://measr.info/dev/reference/measr_dcm.html), `attribute_structure` allows users to specified either "unconstrained" relationships between attributes or "independent" attributes.
+* Updated prior specifications
+  * Users can now specify a prior distribution for the structural parameters that govern the base rates of class membership
+  * Safeguards were added to warn users when a specified prior is not defined for the chosen DCM sub-type. For example, an error is generated if a prior is defined for a slipping parameter, but the LCDM was chosen as the type of model to be estimated.
+  
+In addition to these updates, functionality has also been added for the evaluation of DCMs.
+This will be the focus of the remainder of this report.
+
+\uselandscape
+
+# Using {measr} to Evaluate DCMs
+
+To demonstrate the model fit functionality of {measr}, we'll examine a simulated data set.
+This data set contains 1,000 respondents and 20 items that measure a total of 4 attributes, but no item measures more than 2 attributes.
+The data was generated from the LCDM.
+To demonstrate model fit functionality, we'll first fit an LCDM and a DINA model to the data set in order to compare the fit indices.
+
+```{r}
+#| label: read-data
+#| eval: false
+
+dat <- read_rds(here("data", "example-data.rds"))
+sim_data <- dat$data[, -1]
+sim_qmatrix <- dat$q_matrix[, -1]
+```
+
+```{r}
+#| label: estimate-models
+#| eval: false
+
+lcdm <- measr_dcm(data = sim_data, qmatrix = sim_qmatrix, type = "lcdm",
+                  backend = "cmdstanr", iter_warmup = 1000, iter_sampling = 500,
+                  chains = 4, parallel_chains = 4, file = "fits/lcdm.rds")
+
+dina <- measr_dcm(data = sim_data, qmatrix = sim_qmatrix, type = "dina",
+                  backend = "cmdstanr", iter_warmup = 1000, iter_sampling = 500,
+                  chains = 4, parallel_chains = 4, file = "fits/dina.rds")
+```
+
+Here is an equation:
+
+$$
+P(X_r = x_r) = \sum_{c=1}^C\nu_c\prod_{i=1}^I\pi_{ic}^{x_{ir}}(1-\pi_{ic})^{1-x_{ir}}
+$$
+
+\useportrait
+
+# Using {measr} to Evaluate DCMs
+
+To demonstrate the model fit functionality of {measr}, we'll examine a simulated data set.
+This data set contains 1,000 respondents and 20 items that measure a total of 4 attributes, but no item measures more than 2 attributes.
+The data was generated from the LCDM.
+To demonstrate model fit functionality, we'll first fit an LCDM and a DINA model to the data set in order to compare the fit indices.
+
+```{r}
+#| label: read-data2
+#| eval: false
+
+dat <- read_rds(here("data", "example-data.rds"))
+sim_data <- dat$data[, -1]
+sim_qmatrix <- dat$q_matrix[, -1]
+```
+
+```{r}
+#| label: estimate-models2
+#| eval: false
+
+lcdm <- measr_dcm(data = sim_data, qmatrix = sim_qmatrix, type = "lcdm",
+                  backend = "cmdstanr", iter_warmup = 1000, iter_sampling = 500,
+                  chains = 4, parallel_chains = 4, file = "fits/lcdm.rds")
+
+dina <- measr_dcm(data = sim_data, qmatrix = sim_qmatrix, type = "dina",
+                  backend = "cmdstanr", iter_warmup = 1000, iter_sampling = 500,
+                  chains = 4, parallel_chains = 4, file = "fits/dina.rds")
+```
+
+Here is an equation:
+
+$$
+P(X_r = x_r) = \sum_{c=1}^C\nu_c\prod_{i=1}^I\pi_{ic}^{x_{ir}}(1-\pi_{ic})^{1-x_{ir}}
+$$
+
+# References
+
+```{r write-packages, include = FALSE}
+if (!file.exists("bib/packages.bib")) file.create("bib/packages.bib")
+suppressWarnings(
+  knitr::write_bib(c(.packages()), "bib/packages.bib")
+)
+```

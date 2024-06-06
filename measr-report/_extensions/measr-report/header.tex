@@ -1,0 +1,80 @@
+\usepackage{titling}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[usegeometry,DIV=calc]{typearea}
+\usepackage[letterpaper,textwidth=6.5in,textheight=9in,lmargin=1in,tmargin=1in,footskip=0.5in]{geometry}
+\usepackage[natbib=true,style=apa]{biblatex}
+
+\definecolor{measrdarkblue}{RGB}{2,48,71}
+\definecolor{measrmediumblue}{RGB}{33,158,188}
+\definecolor{measrlightblue}{RGB}{142,202,230}
+
+\newfontfamily\headingfont[]{Playfair Display}
+
+% title styles
+\titleformat{\section}{\color{measrmediumblue}\Large\headingfont}{}{0pt}{}
+\titlespacing*{\section}{0pt}{6pt plus 0pt minus 0pt}{0pt plus 0pt minus 0pt}
+
+\titleformat{\subsection}{\color{measrlightblue}\large\headingfont}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{6pt plus 0pt minus 0pt}{0pt plus 0pt minus 0pt}
+
+\titleformat{\subsubsection}{\color{measrmediumblue}\normalsize\headingfont}{}{0pt}{}
+\titlespacing*{\subsubsection}{0pt}{3pt plus 0pt minus 0pt}{0pt plus 0pt minus 0pt}
+
+\titleformat{\paragraph}{\bfseries\large}{\theparagraph. }{0pt}{}
+\titlespacing*{\paragraph}{0pt}{10pt}{-6pt plus 0pt minus 0pt}
+
+\titleformat{\subparagraph}{\bfseries\itshape\large}{\thesubparagraph. }{0pt}{}
+\titlespacing*{\subparagraph}{0pt}{10pt}{-6pt plus 0pt minus 0pt}
+
+\raggedright
+\raggedbottom
+
+% page styles
+\usepackage{fancyhdr}
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ -- \ #1}}
+
+\fancypagestyle{plain}{%
+  \lhead{}
+  \chead{}
+  \rhead{}
+  \renewcommand{\headrulewidth}{0pt}
+  \lfoot{}
+  \cfoot{}
+  \rfoot{}
+  \fancyfoot[L]{FOR INTERNAL PROJECT REVIEW ONLY}
+  \fancyfoot[R]{\thepage}
+}
+
+% landscape and portrait modes
+\newcommand*{\useportrait}{%
+  \clearpage
+  \KOMAoptions{paper=portrait,DIV=current}%switch to portrait
+  \newgeometry{margin=1in,footskip=0.5in}%
+  \fancyhfoffset{0pt}% <- recalculate head and foot width for fancyhdr
+}
+\newcommand*{\uselandscape}{%
+  \clearpage
+  \KOMAoptions{paper=landscape,DIV=current}%switch to landscape
+  \newgeometry{margin=1in,footskip=0.5in}%
+  \fancyhfoffset{0pt}% recalculate head and foot width for fancyhdr
+}
+
+% bibliography formatting
+\ExecuteBibliographyOptions{sortcites}
+\DeclareFieldFormat{doi}{%
+  \url{https://doi.org/#1}}
+\DeclareFieldFormat{eprint:arXiv}{%
+  arXiv\addperiod\space\url{https://arxiv.org/abs/#1}}
+  
+
+\DeclareLanguageMapping{english}{american-apa}
