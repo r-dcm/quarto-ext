@@ -11,3 +11,5 @@ contributes:
       width: 1280
       height: 720
       highlight-style: a11y-light
+  shortcodes:
+    - _extensions/quarto-ext/fontawesome/fontawesome.lua
