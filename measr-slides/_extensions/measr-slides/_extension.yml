@@ -9,9 +9,8 @@ contributes:
         - quarto-ext/fontawesome
     revealjs:
       theme: [default, theme.scss]
-      css: backgrounds.css
+      css: [backgrounds.css, lists.css]
       preview-links: auto
       width: 1280
       height: 720
       highlight-style: a11y-light
- 
