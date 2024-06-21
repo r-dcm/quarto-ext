@@ -115,14 +115,21 @@ countdown(
 )
 ```
 
-## {.empty data-menu-title="Empty background"}
+# {.empty data-menu-title="measr" background-color="#023047" background-iframe="grid-worms/index.html"}
 
 ```{r}
 #| label: big-image
 #| out-width: 100%
-#| fig-alt: "A big image."
+#| fig-alt: "Hex logo for the measr R package."
 
 include_graphics("figure/measr-hex.png")
+```
+
+## {.empty-white data-menu-title="Empty background"}
+
+```{r}
+#| label: big-image
+#| out-width: 100%
 ```
 
 
@@ -142,30 +149,33 @@ Presentation Subtitle
 <https://measr.info>
 :::
 
-# <https://measr.info> {.thank-you data-menu-title="Get in touch" background-color="#023047" background-iframe="grid-worms/index.html"}
+# <https://measr.info> {.thank-you data-menu-title="Get in touch" background-color="#023047"}
 
 :::{.columns .v-center-container}
 
-:::{.column .image width="60%"}
+:::{.column .image width="65%"}
 
-![](figure/measr-hex.png){width="50%" fig-alt="Hex logo for the measr R package."}
+```{r}
+#| label: big-image
+#| out-width: 50%
+```
 
 :::
 
-:::{.column width="40%"}
+:::{.column width="35%"}
 
 :::{.thank-you-subtitle}
 
 :::{.small}
 
-{{< fa globe >}} \ [wjakethompson.com](https://wjakethompson.com)  
-{{< fa envelope >}} \ [wjakethompson@ku.edu](mailto:wjakethompson@ku.edu)  
-{{< fa brands linkedin >}} \ [in/wjakethompson](https://linkedin.com/in/wjakethompson)  
-{{< fa brands github >}} \ [@wjakethompson](https://github.com/wjakethompson)  
-{{< fa brands mastodon >}} \ [@wjakethompson@fosstodon.org](https://fosstodon.org/@wjakethompson)  
-{{< fa brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)  
-{{< fa brands threads >}} \ [@wjakethompson.com](https://www.threads.net/@wjakethompson)  
-{{< fa brands x-twitter >}} \ [@wjakethompson](https://twitter.com/wjakethompson)  
+{{< iconify fa6-solid globe >}} \ [wjakethompson.com](https://wjakethompson.com)  
+{{< iconify fa6-solid envelope >}} \ [wjakethompson@ku.edu](mailto:wjakethompson@ku.edu)  
+{{< iconify fa6-brands linkedin >}} \ [in/wjakethompson](https://linkedin.com/in/wjakethompson)  
+{{< iconify fa6-brands github >}} \ [@wjakethompson](https://github.com/wjakethompson)  
+{{< iconify fa6-brands mastodon >}} \ [@wjakethompson@fosstodon.org](https://fosstodon.org/@wjakethompson)  
+{{< iconify fa6-brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)  
+{{< iconify fa6-brands threads >}} \ [@wjakethompson](https://www.threads.net/@wjakethompson)  
+{{< iconify fa6-brands x-twitter >}} \ [@wjakethompson](https://twitter.com/wjakethompson)  
 
 :::
 
