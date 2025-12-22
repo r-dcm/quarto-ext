@@ -1,30 +1,30 @@
 .reveal .slide-background-content {
-  background-image: url("figure/backgrounds/ku-title.png");
+  background-image: url("figure/backgrounds/branded/ku-title.png");
   background-size: contain;
 }
 
 .reveal .level2 .slide-background-content {
-  background-image: url("figure/backgrounds/default.png");
+  background-image: url("figure/backgrounds/branded/default.png");
   background-size: contain;
 }
 
 .reveal .title-slide .slide-background-content {
-  background-image: url("figure/backgrounds/section.png");
+  background-image: url("figure/backgrounds/branded/section.png");
   background-size: contain;
 }
 
 .reveal .exercise .slide-background-content {
-  background-image: url("figure/backgrounds/exercises.png");
+  background-image: url("figure/backgrounds/branded/exercises.png");
   background-size: contain;
 }
 
 .reveal .closing .slide-background-content {
-  background-image: url("figure/backgrounds/plain-title.png");
+  background-image: url("figure/backgrounds/branded/plain-title.png");
   background-size: contain;
 }
 
 .reveal .empty-white .slide-background-content {
-  background-image: url("figure/backgrounds/empty-white.png");
+  background-image: url("figure/backgrounds/branded/empty-white.png");
   background-size: contain;
 }
 
