@@ -1,3 +1,5 @@
+/* for no measr logos, change `branded/` to `unbranded/` */
+
 .reveal .slide-background-content {
   background-image: url("figure/backgrounds/branded/ku-title.png");
   background-size: contain;
