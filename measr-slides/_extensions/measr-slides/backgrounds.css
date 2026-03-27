@@ -10,6 +10,11 @@
   background-size: contain;
 }
 
+.reveal .flip-brand .slide-background-content {
+  background-image: url("figure/backgrounds/unbranded/default.png");
+  background-size: contain;
+}
+
 .reveal .title-slide .slide-background-content {
   background-image: url("figure/backgrounds/branded/section.png");
   background-size: contain;
