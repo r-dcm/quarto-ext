@@ -73,18 +73,19 @@ $btn-code-copy-color-active: $rdcm-blue;
   --rdcm-inset-left: 50px;
   text-align: center;
 
-  /* The measure limit further down caps body copy at 1140px inside an 1820px
-     content box; without auto margins that column stays pinned left and the
-     text would not sit under the centred heading. */
-  >p,
-  >.columns>.column>p {
-    margin-left: auto;
-    margin-right: auto;
-  }
+  /* Vertically centred, the way .closing does it. Reveal marks the visible
+     slide `display: block !important`, so the flex switch needs !important to
+     take effect; the section's own top/bottom padding still applies as the
+     minimum clearance. */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 
   /* Lists keep their text left-aligned and centre as a block instead. The hex
-     bullets are `list-style-image` markers sitting outside the line box, so
-     centring the text itself would strand every bullet away from its item. */
+     bullets are absolutely-positioned ::before markers sitting outside the
+     line box (lists.css), so centring the text itself would strand every
+     bullet away from its item. */
   >ul,
   >ol {
     width: fit-content;
@@ -151,14 +152,6 @@ $btn-code-copy-color-active: $rdcm-blue;
 .reveal .slides section.slide>.columns>.column>ul,
 .reveal .slides section.slide>.columns>.column>ol {
   font-size: 1.19em;
-}
-
-/* measure limit for left-aligned content; centred layouts keep the full width
-   so their text stays on the slide's centre line */
-.reveal .slides section.slide:not(.closing)>p,
-.reveal .slides section.slide:not(.closing)>ul,
-.reveal .slides section.slide:not(.closing)>ol {
-  max-width: 1140px;
 }
 
 /* ---- headings: red hex-tipped rule, no heavy bars --------------------- */
