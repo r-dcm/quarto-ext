@@ -29,6 +29,33 @@ quarto use template r-dcm/quarto-ext/rdcm-slides
 
 Level-1 headings become section dividers automatically.
 
+## Callouts
+
+Quarto's five callout types are restyled as soft tinted panels — no boxed
+borders, no coloured title bars — each with a hexagon in place of the default
+Bootstrap glyph. Tint and glyph are drawn from the same palette colour in
+every case:
+
+| Callout | Field | Glyph |
+| --- | --- | --- |
+| `.callout-note` | Light blue tint | Light blue hexagon |
+| `.callout-tip` | Blue tint | Blue hexagon |
+| `.callout-warning` | Red tint | Red hexagon |
+| `.callout-caution` | Cream tint | Cream hexagon |
+| `.callout-important` | Navy tint | Navy hexagon |
+
+```markdown
+::: {.callout-tip}
+## Tip
+Cached fits make re-rendering slides cheap.
+:::
+```
+
+The title is optional; without a heading the callout renders as a bare tinted
+panel with its glyph. Use the `## Heading` form rather than `title="..."` —
+the attribute form wraps the callout in an extra `div` carrying a stray HTML
+`title`, which shows up as a browser tooltip.
+
 ## Title slide options
 
 Both are off by default, and both are title-slide only — Quarto builds that
@@ -40,29 +67,32 @@ title-slide-attributes:
   data-atlas: "true"      # ATLAS signature; "vertical" for the stacked lockup
 ```
 
-## Thank-you slide
+## Closing slide
 
-A level-1 heading with `.thank-you`, then two columns — put a QR code or figure
-in the `.image` column and contact links in a `.thank-you-subtitle` block:
+A level-1 heading with `.closing`, then two columns — put a QR code or figure
+in the first column and contact links in a `.end-links` block:
 
 ```markdown
 # Learn more: [**r-dcm.org**](https://r-dcm.org) {.thank-you}
 
-::: {.columns .v-center-container}
-::: {.column .image width="60%"}
+:::{.columns .v-center-container}
+:::{.column width="60%"}
 ![](figure/slides-qr.png){width="50%" fig-align="center"}
 :::
-::: {.column width="40%"}
-::: {.thank-you-subtitle}
-::: {.small}
+::: {.column .end-links width="40%"}
 {{< iconify fa6-solid globe >}} \ [wjakethompson.com](https://wjakethompson.com)
-:::
-:::
 :::
 :::
 ```
 
 ## Snippets
+
+Blockquote — hex glyph, no rule and no quotation marks:
+
+```markdown
+> Diagnostic models trade a single score for a profile of what a
+> student actually knows.
+```
 
 Package sticker row:
 

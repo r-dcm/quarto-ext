@@ -49,16 +49,25 @@
    Sizing is left to Quarto's own .callout-icon::before rule.
    ------------------------------------------------------------------------- */
 .reveal div.callout .callout-icon::before,
-.reveal div.callout.callout-note .callout-icon::before,
-.reveal div.callout.callout-tip .callout-icon::before,
-.reveal div.callout.callout-important .callout-icon::before,
-.reveal div.callout.callout-caution .callout-icon::before {
+.reveal div.callout.callout-tip .callout-icon::before {
   background-image: url("hex/bullet-blue.svg");
   background-repeat: no-repeat;
 }
 
+.reveal div.callout.callout-note .callout-icon::before {
+  background-image: url("hex/bullet-light.svg");
+}
+
 .reveal div.callout.callout-warning .callout-icon::before {
+  background-image: url("hex/bullet-red.svg");
+}
+
+.reveal div.callout.callout-caution .callout-icon::before {
   background-image: url("hex/bullet-cream.svg");
+}
+
+.reveal div.callout.callout-important .callout-icon::before {
+  background-image: url("hex/bullet-navy.svg");
 }
 
 /* ---- blockquote hex glyph ----------------------------------------------- */

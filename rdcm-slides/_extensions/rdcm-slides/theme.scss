@@ -33,6 +33,10 @@ $rdcm-inset-dark-right: 225px;
 
 /* code blocks — grey field with a navy hairline, matching measr-slides */
 $code-font-size: 1.2em;
+/* Quarto derives inline code as $code-font-size * 0.875, which lands 5% above
+   the surrounding copy. Pin it to 1em so inline code matches the text it sits
+   in; code blocks keep $code-font-size. */
+$code-inline-font-size: 1em;
 $code-block-bg: #eeeeee;
 $code-block-height: 700px;
 $code-block-border-color: $rdcm-navy;
@@ -148,9 +152,11 @@ $btn-code-copy-color-active: $rdcm-blue;
 .reveal .slides section.slide>p,
 .reveal .slides section.slide>ul,
 .reveal .slides section.slide>ol,
+.reveal .slides section.slide>blockquote,
 .reveal .slides section.slide>.columns>.column>p,
 .reveal .slides section.slide>.columns>.column>ul,
-.reveal .slides section.slide>.columns>.column>ol {
+.reveal .slides section.slide>.columns>.column>ol,
+.reveal .slides section.slide>.columns>.column>blockquote {
   font-size: 1.19em;
 }
 
@@ -192,7 +198,9 @@ $btn-code-copy-color-active: $rdcm-blue;
   .subtitle {
     color: $rdcm-light;
     font-size: 1.15em;
-    margin: 0.35em 0 0;
+    /* The bottom margin is what separates the subtitle from the author block —
+       the shorthand here overrides Quarto's own margin-bottom on .subtitle. */
+    margin: 0.35em 0 0.85em;
   }
 
   p.author,
@@ -448,11 +456,17 @@ $btn-code-copy-color-active: $rdcm-blue;
 }
 
 .reveal .slides div.callout.callout-warning {
-  background: rgba(243, 211, 189, 0.45);
+  background: rgba(215, 38, 61, 0.10);
+}
+
+/* Held low on purpose: the glyph is solid #f3d3bd, so raising this alpha walks
+   the field toward the glyph's own colour and the hexagon disappears. */
+.reveal .slides div.callout.callout-caution {
+  background: rgba(243, 211, 189, 0.25);
 }
 
 .reveal .slides div.callout.callout-important {
-  background: rgba(215, 38, 61, 0.10);
+  background: rgba(2, 48, 71, 0.10);
 }
 
 /* ---- package hex sticker row ------------------------------------------- */

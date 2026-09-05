@@ -235,6 +235,57 @@ Use `.hex-quiet` when a plot needs the room.
 `.empty-navy` is the same bare canvas on the navy field.
 
 
+## Callouts
+
+Each type carries its own tint and hex glyph from the palette.
+
+:::{.columns}
+:::{.column width="48%"}
+
+::: {.callout-note}
+## Note
+Light blue field — supporting detail.
+:::
+
+::: {.callout-tip}
+## Tip
+Blue field — the practical aside.
+:::
+
+::: {.callout-warning}
+## Warning
+Red field — proceed carefully.
+:::
+
+:::
+
+:::{.column width="4%"}
+:::
+
+:::{.column width="48%"}
+
+::: {.callout-important}
+## Important
+Navy field — the thing not to miss.
+:::
+
+::: {.callout-caution}
+## Caution
+Cream field — a lighter flag.
+:::
+
+:::
+:::
+
+
+## Blockquotes
+
+> Diagnostic models trade a single score for a profile of what a student
+> actually knows.
+
+The hex glyph is drawn with `blockquote::before` — no rule, no italics, no
+quotation marks.
+
 ## [**r-dcm.org**](https://r-dcm.org) {.closing data-menu-title="Get in touch"}
 
 :::{.columns .v-center-container}
