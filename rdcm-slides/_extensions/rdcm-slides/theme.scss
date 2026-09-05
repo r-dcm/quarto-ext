@@ -163,6 +163,16 @@ $btn-code-copy-color-active: $rdcm-blue;
   text-wrap: pretty;
 }
 
+/* A titleless slide — `# {.empty-navy}`, `## {.exercise .no-rule}` — still
+   emits an empty heading element, which generates a line box at heading size
+   plus the ::after rule bar and its margins. Reveal then centres the real
+   content against that phantom block and everything lands below centre. There
+   is nothing to show, so take it out of flow entirely. */
+.reveal .slides section>h1:empty,
+.reveal .slides section>h2:empty {
+  display: none;
+}
+
 /* heading rule, callout icons, blockquote glyph and the ATLAS plate all
    reference bundled assets and live in assets.css — see the note there. */
 
