@@ -1,0 +1,98 @@
+/* ---------------------------------------------------------------------------
+   r-dcm slides — rules that reference bundled assets
+
+   These live here rather than in theme.scss on purpose. Quarto compiles the
+   SCSS theme into template_files/libs/revealjs/dist/theme/, so a relative
+   url("hex/...") written there resolves against that directory and 404s. Files
+   listed under `css:` are linked in place from _extensions/rdcm-slides/, so
+   relative paths next to hex/ and figure/ resolve correctly.
+
+   Anything that points at an asset belongs in this file.
+   --------------------------------------------------------------------------- */
+
+/* ---- red hex-tipped rule under headings -------------------------------- */
+.reveal .slides section > h2::after,
+.reveal .slides section.title-slide > h1::after {
+  content: "";
+  display: block;
+  width: 168px;
+  height: 24px;
+  background: url("hex/rule.svg") no-repeat left center;
+  background-size: contain;
+}
+
+.reveal .slides section > h2::after {
+  margin: 0.42em 0 0.62em;
+}
+
+.reveal .slides section.title-slide > h1::after {
+  margin-top: 0.4em;
+}
+
+.reveal .slides section.no-rule > h2::after,
+.reveal .slides section.no-rule > h1::after {
+  display: none;
+}
+
+/* centred layouts need the rule centred with the text */
+.reveal .slides section.closing > h2::after,
+.reveal .slides section.closing > h1::after,
+.reveal .slides section.thank-you > h1::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- callout icons ------------------------------------------------------
+   Quarto sets a per-type Bootstrap glyph at
+   `.reveal div.callout.callout-note .callout-icon::before`. These match that
+   specificity and win on source order (css: files load after the theme).
+   Sizing is left to Quarto's own .callout-icon::before rule.
+   ------------------------------------------------------------------------- */
+.reveal div.callout .callout-icon::before,
+.reveal div.callout.callout-note .callout-icon::before,
+.reveal div.callout.callout-tip .callout-icon::before,
+.reveal div.callout.callout-important .callout-icon::before,
+.reveal div.callout.callout-caution .callout-icon::before {
+  background-image: url("hex/bullet-blue.svg");
+  background-repeat: no-repeat;
+}
+
+.reveal div.callout.callout-warning .callout-icon::before {
+  background-image: url("hex/bullet-cream.svg");
+}
+
+/* ---- blockquote hex glyph ----------------------------------------------- */
+.reveal blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  width: 0.55em;
+  height: 0.63em;
+  background: url("hex/bullet-blue.svg") no-repeat center / contain;
+}
+
+/* ---- optional ATLAS signature on the title slide ------------------------
+   Enable per-deck with:
+
+     title-slide-attributes:
+       data-atlas: "true"      # or "vertical"
+   ------------------------------------------------------------------------- */
+.reveal .slides section#title-slide[data-atlas]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 1.75em;
+  width: 14.1em;
+  height: 3.3em;
+  background: #ffffff url("figure/atlas-horiz.png") no-repeat center / 84% auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 14px rgba(2, 48, 71, 0.35);
+}
+
+.reveal .slides section#title-slide[data-atlas="vertical"]::after {
+  width: 8.8em;
+  height: 8.8em;
+  background-image: url("figure/atlas-vert.png");
+  background-size: 76% auto;
+}

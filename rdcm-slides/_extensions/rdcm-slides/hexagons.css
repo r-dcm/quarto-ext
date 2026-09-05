@@ -1,0 +1,178 @@
+/* ---------------------------------------------------------------------------
+   r-dcm slides — hexagon backgrounds
+   Everything here is vector + viewport-relative, so backgrounds fill any
+   aspect ratio. No screenshot backgrounds, no letterboxing.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --rdcm-light: #8ecae6;
+  --rdcm-blue: #219ebc;
+  --rdcm-navy: #023047;
+  --rdcm-red: #d7263d;
+  --rdcm-cream: #f3d3bd;
+  --rdcm-hex-size: 30vmax;      /* bottom-right cluster footprint */
+  --rdcm-hex-size-tl: 16vmax;   /* top-left cluster — small, keeps the text column wide */
+  --rdcm-hex-size-dark: 40vmax; /* larger on title/section slides */
+
+  /* The cluster SVGs carry whole hexagons whose geometry runs outside the
+     400-unit design square. Their viewBox now includes a 220-unit margin on the
+     corner side so those hexagons are drawn complete instead of being sliced at
+     the box edge — otherwise the drift animation walks that flat cut edge onto
+     the slide and a half hexagon appears to float in. These two numbers keep the
+     on-slide framing identical to the 400-unit box: grow by 620/400, pull back
+     by 220/400, so the extra margin sits off-slide. */
+  --rdcm-hex-grow: 1.55;
+  --rdcm-hex-bleed: -0.55;
+}
+
+.reveal .slide-background-content {
+  background-color: #ffffff;
+}
+
+/* Modifiers below set --rdcm-hex-s; width, height and the corner offsets are
+   all derived from it, so a size override never has to restate the geometry. */
+.reveal .slide-background-content::before,
+.reveal .slide-background-content::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--rdcm-hex-s) * var(--rdcm-hex-grow));
+  height: calc(var(--rdcm-hex-s) * var(--rdcm-hex-grow));
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.reveal .slide-background-content::before {
+  --rdcm-hex-s: var(--rdcm-hex-size-tl);
+  top: calc(var(--rdcm-hex-s) * var(--rdcm-hex-bleed));
+  left: calc(var(--rdcm-hex-s) * var(--rdcm-hex-bleed));
+  background-position: left top;
+  background-image: url("hex/tl-1.svg");
+}
+
+.reveal .slide-background-content::after {
+  --rdcm-hex-s: var(--rdcm-hex-size);
+  right: calc(var(--rdcm-hex-s) * var(--rdcm-hex-bleed));
+  bottom: calc(var(--rdcm-hex-s) * var(--rdcm-hex-bleed));
+  background-position: right bottom;
+  background-image: url("hex/br-1.svg");
+}
+
+/* Four arrangements, rotating by slide order, so no two neighbours match.
+   :where() zeroes the nth-of-type specificity and .backgrounds is dropped, so
+   these stay below the layout modifiers further down. Written plainly they
+   score higher than `.slide-background.dark` et al and would silently replace
+   the art on every dark, closing, section, title and exercise slide that did
+   not happen to land on 4n + 1. */
+.reveal .slide-background:where(:nth-of-type(4n + 2)) .slide-background-content::before { background-image: url("hex/tl-2.svg"); }
+.reveal .slide-background:where(:nth-of-type(4n + 2)) .slide-background-content::after  { background-image: url("hex/br-2.svg"); }
+.reveal .slide-background:where(:nth-of-type(4n + 3)) .slide-background-content::before { background-image: url("hex/tl-3.svg"); }
+.reveal .slide-background:where(:nth-of-type(4n + 3)) .slide-background-content::after  { background-image: url("hex/br-3.svg"); }
+.reveal .slide-background:where(:nth-of-type(4n + 4)) .slide-background-content::before { background-image: url("hex/tl-4.svg"); }
+.reveal .slide-background:where(:nth-of-type(4n + 4)) .slide-background-content::after  { background-image: url("hex/br-4.svg"); }
+
+/* --- dark slides: title, section dividers, closing, and .dark -------------
+   Reveal builds .slide-background elements at runtime in .reveal .backgrounds
+   and copies each slide's classes onto the background element itself, so these
+   must be written as .slide-background.<class>, not as a descendant of it. The
+   deck title slide has no id on its background — it carries Quarto's
+   .quarto-title-block class instead.
+   -------------------------------------------------------------------------- */
+.reveal .slide-background.quarto-title-block .slide-background-content,
+.reveal .slide-background.title-slide .slide-background-content,
+.reveal .slide-background.closing .slide-background-content,
+.reveal .slide-background.thank-you .slide-background-content,
+.reveal .slide-background.dark .slide-background-content {
+  background-color: var(--rdcm-navy);
+}
+
+.reveal .slide-background.quarto-title-block .slide-background-content::before,
+.reveal .slide-background.closing .slide-background-content::before,
+.reveal .slide-background.thank-you .slide-background-content::before,
+.reveal .slide-background.dark .slide-background-content::before {
+  --rdcm-hex-s: var(--rdcm-hex-size-dark);
+  background-image: url("hex/dark-tl.svg");
+  animation: rdcm-drift-a 22s ease-in-out infinite;
+}
+
+.reveal .slide-background.quarto-title-block .slide-background-content::after,
+.reveal .slide-background.closing .slide-background-content::after,
+.reveal .slide-background.thank-you .slide-background-content::after,
+.reveal .slide-background.dark .slide-background-content::after {
+  --rdcm-hex-s: var(--rdcm-hex-size-dark);
+  background-image: url("hex/dark-br.svg");
+  animation: rdcm-drift-b 26s ease-in-out infinite;
+}
+
+.reveal .slide-background.title-slide .slide-background-content::before {
+  --rdcm-hex-s: var(--rdcm-hex-size-dark);
+  background-image: url("hex/section-tl.svg");
+  animation: rdcm-drift-a 24s ease-in-out infinite;
+}
+
+.reveal .slide-background.title-slide .slide-background-content::after {
+  --rdcm-hex-s: var(--rdcm-hex-size-dark);
+  background-image: url("hex/section-br.svg");
+  animation: rdcm-drift-b 20s ease-in-out infinite;
+}
+
+@keyframes rdcm-drift-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50%      { transform: translate(1.1vmax, -0.9vmax) rotate(-0.6deg); }
+}
+
+@keyframes rdcm-drift-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50%      { transform: translate(-1.2vmax, 0.8vmax) rotate(0.6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .slide-background-content::before,
+  .reveal .slide-background-content::after { animation: none !important; }
+}
+
+/* --- .exercise: light blue field, navy/red clusters -----------------------
+   The light blue signals "there is something for you to do here". Built on the
+   content-slide geometry at the default 16vmax/30vmax, so an exercise slide
+   keeps the ordinary text margins — navy anchors and a red accent for contrast,
+   blue kept chromatic for the shapes that would otherwise vanish into the
+   field. Static, like every other content layout — the drift is reserved for
+   title, section and closing slides. */
+.reveal .slide-background.exercise .slide-background-content {
+  background-color: var(--rdcm-light);
+}
+
+.reveal .slide-background.exercise .slide-background-content::before {
+  background-image: url("hex/exercise-tl.svg");
+}
+
+.reveal .slide-background.exercise .slide-background-content::after {
+  background-image: url("hex/exercise-br.svg");
+}
+
+/* --- background modifiers ------------------------------------------------- */
+
+/* .empty — no hexagons at all (white) */
+.reveal .slide-background.empty .slide-background-content::before,
+.reveal .slide-background.empty .slide-background-content::after {
+  background-image: none;
+  content: none;
+}
+
+/* .empty-navy — no hexagons, navy field */
+.reveal .slide-background.empty-navy .slide-background-content {
+  background-color: var(--rdcm-navy);
+}
+.reveal .slide-background.empty-navy .slide-background-content::before,
+.reveal .slide-background.empty-navy .slide-background-content::after {
+  background-image: none;
+  content: none;
+}
+
+/* .hex-quiet — keep one small cluster only, for busy figures */
+.reveal .slide-background.hex-quiet .slide-background-content::before { content: none; }
+.reveal .slide-background.hex-quiet .slide-background-content::after { --rdcm-hex-s: 18vmax; opacity: 0.7; }
+
+/* .hex-loud — oversized clusters for statement slides */
+.reveal .slide-background.hex-loud .slide-background-content::before,
+.reveal .slide-background.hex-loud .slide-background-content::after { --rdcm-hex-s: 46vmax; }

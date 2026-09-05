@@ -1,0 +1,288 @@
+---
+title: "Diagnostic classification models in R"
+subtitle: "A tour of the r-dcm suite"
+author: "W. Jake Thompson"
+date: today
+format:
+  rdcm-slides-revealjs:
+    progress: false
+code-link: true
+preload-iframes: true
+code-annotations: select
+engine: knitr
+execute:
+  echo: false
+  messsage: true
+  warning: true
+knitr:
+  opts_chunk: 
+    digits: 3
+    comment: "#>"
+    fig-align: "center"
+    fig-width: 7
+    fig-asp: 0.618
+    out-width: 90%
+    collapse: true
+countdown:
+  color_border: "#023047"
+  color_background: "#023047"
+  color_text: "#8ECAE6"
+  color_running_background: "#023047"
+  color_running_text: "#8ECAE6"
+  color_finished_background: "#D7263D"
+  color_finished_text: "#FFFFFF"
+# Optional title-slide extras:
+# title-slide-attributes:
+#   data-kicker: "r-dcm"    # small mono kicker above the title
+#   data-atlas: "true"      # ATLAS signature ("true" or "vertical")
+---
+
+# Section title
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(ggmeasr)
+library(knitr)
+library(measr)
+library(here)
+
+set_theme(plot_margin = margin(5, 0, 0, 0))
+```
+
+## Default Slide
+
+Here is some **bold** and *italic* text.
+
+* Bullets
+  * And sub-bullets
+* Another bullet
+
+## Columns
+
+:::columns
+:::{.column width="45%"}
+### Left column
+
+- Point 1
+- Point 2
+- Point 3
+:::
+
+:::{.column width="45%"}
+### Right column
+
+- Point 4
+- Point 5
+- Point 6
+:::
+:::
+
+
+## Code
+
+```{r}
+#| echo: TRUE
+#| output-location: column
+library(measr)
+
+create_profiles(5)
+```
+
+## Code annotations
+
+```r
+starwars |>                            # <1>
+  mutate(                              # <2>
+    bmi = mass / ((height / 100) ^ 2), # <2>
+    age_new_hope = birth_year + 4      # <2>
+  )                                    # <2>
+```
+1. Take `starwars`, and then,
+2. add new columns for the BMI and age in "Return of the Jedi"
+
+## Output highlighting
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|8|10,11"
+
+starwars |>
+  mutate(
+    bmi = mass / ((height / 100)^2),
+    age_new_hope = birth_year + 4
+  )
+```
+
+
+## Exercise 1 {.exercise}
+
+Here is an exercise.
+
+{{< countdown "3:00" bottom="10%" >}}
+
+## {.exercise .no-rule data-menu-title="Solution 1"}
+
+:::{.panel-tabset}
+### Specify
+
+```{r}
+#| label: specifcy-sol
+#| eval: false
+#| echo: true
+
+spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id"
+)
+```
+
+### Estimate
+
+```{r}
+#| label: estimate-sol
+#| eval: false
+#| echo: true
+
+mod <- dcm_estimate(
+  spec,
+  data = ecpe_data,
+  identifer = "resp_id"
+)
+```
+
+:::
+
+## Why DCMs
+
+- Fine-grained, criterion-referenced feedback
+- Classifications, not a single scale score
+- Small item pools, fast turnaround
+
+
+# {.empty-navy data-menu-title="measr" background-iframe="grid-worms/index.html"}
+
+```{r}
+#| label: big-image
+#| out-width: 100%
+#| fig-alt: "Hex logo for the measr R package."
+
+include_graphics("figure/measr.png")
+```
+
+
+## A heading with no rule {.no-rule}
+
+`.no-rule` drops the red hex-tipped rule — for slides that open on a figure or
+a single statement rather than a list.
+
+# The suite
+
+::: {.hex-row .large}
+![](figure/measr.png) ![](figure/dcmstan.png) ![](figure/dcmdata.png) ![](figure/rdcmtemplate.png)
+:::
+
+## Fit a model with measr
+
+::: columns
+::: {.column width="48%"}
+- One call to estimate an LCDM
+- Stan or Mplus back ends
+- Reliability and fit in a tidy tibble
+:::
+
+::: {.column width="52%"}
+```{.r}
+library(measr)
+
+fit <- measr_dcm(
+  data = mdm_data,
+  qmatrix = mdm_qmatrix,
+  type = "lcdm"
+)
+```
+:::
+:::
+
+::: {.callout-tip}
+Cached fits make re-rendering slides cheap.
+:::
+
+## Under the hood {.dark}
+
+`.dark` puts any content slide on the navy field with the drifting light
+hexagons. Bullets and inline code recolour to stay readable:
+
+- Stan back end via `dcmstan`
+- Data and Q-matrices from `dcmdata`
+
+## A wide figure {.hex-quiet}
+
+Use `.hex-quiet` when a plot needs the room.
+
+## Small models, big claims {.hex-loud}
+
+`.hex-loud` oversizes both clusters — save it for statement slides.
+
+## A bare slide {.empty}
+
+`.empty` removes every background element.
+
+## Full-bleed on navy {.empty-navy}
+
+`.empty-navy` is the same bare canvas on the navy field.
+
+
+## [**r-dcm.org**](https://r-dcm.org) {.closing data-menu-title="Get in touch"}
+
+:::{.columns .v-center-container}
+:::{.column width="60%"}
+```{r}
+#| label: big-image
+#| out-width: 50%
+```
+
+:::
+
+:::{.column .end-links width="40%"}
+{{< iconify fa6-solid globe >}} \ [wjakethompson.com](https://wjakethompson.com)  
+{{< iconify fa6-solid envelope >}} \ [wjakethompson@ku.edu](mailto:wjakethompson@ku.edu)  
+{{< iconify fa6-brands linkedin >}} \ [in/wjakethompson](https://linkedin.com/in/wjakethompson)  
+{{< iconify fa6-brands github >}} \ [@wjakethompson](https://github.com/wjakethompson)  
+{{< iconify fa6-brands mastodon >}} \ [@wjakethompson@fosstodon.org](https://fosstodon.org/@wjakethompson)  
+{{< iconify fa6-brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)  
+{{< iconify fa6-brands threads >}} \ [@wjakethompson](https://www.threads.net/@wjakethompson)  
+{{< iconify fa6-brands x-twitter >}} \ [@wjakethompson](https://twitter.com/wjakethompson)  
+
+:::
+
+:::
+
+## Acknowledgements
+
+The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants [R305D210045](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546) and [R305D240032](https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075) to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the Institute or the U.S. Department of Education.
+<br><br>
+
+:::{.columns}
+:::{.column width="15%"}
+:::
+
+:::{.column width="70%"}
+
+```{r}
+#| label: ies-logo
+#| out-width: 100%
+#| fig-align: center
+#| fig-alt: |
+#|   Logo for the Institute of Education Sciences.
+
+include_graphics("figure/IES_InstituteOfEducationSciences_RGB.png")
+```
+
+:::
+
+:::{.column width="15%"}
+:::
+:::

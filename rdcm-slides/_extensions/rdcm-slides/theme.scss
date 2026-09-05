@@ -1,0 +1,603 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+$rdcm-light: #8ecae6;
+$rdcm-blue: #219ebc;
+$rdcm-navy: #023047;
+$rdcm-red: #d7263d;
+$rdcm-cream: #f3d3bd;
+$rdcm-muted: #5a7c8f;
+
+$body-bg: #ffffff;
+$body-color: $rdcm-navy;
+$link-color: $rdcm-blue;
+$link-color-hover: $rdcm-red;
+
+$presentation-heading-color: $rdcm-navy;
+$presentation-heading-font: 'Atkinson Hyperlegible', system-ui, sans-serif;
+$presentation-heading-font-weight: 700;
+$font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+$font-family-monospace: 'JetBrains Mono', monospace;
+
+$presentation-font-size-root: 34px;
+$presentation-h1-font-size: 2.65em; // 90px
+$presentation-h2-font-size: 2.29em; // 78px
+$presentation-h3-font-size: 1.5em; // 51px
+$presentation-slide-text-align: left;
+
+/* Shared inset for the full-bleed dark layouts. The deck title slide and the
+   level-1 section dividers carry the same 40vmax hex cluster, so they take one
+   value rather than two that drift apart. */
+$rdcm-inset-dark-left: 495px;
+$rdcm-inset-dark-right: 225px;
+
+/* code blocks — grey field with a navy hairline, matching measr-slides */
+$code-font-size: 1.2em;
+$code-block-bg: #eeeeee;
+$code-block-height: 700px;
+$code-block-border-color: $rdcm-navy;
+$btn-code-copy-color: $rdcm-navy;
+$btn-code-copy-color-active: $rdcm-blue;
+
+/*-- scss:rules --*/
+
+/* ---- slide geometry ----------------------------------------------------
+   Insets are in slide coordinates (the deck is pinned to 1920x1080), matching
+   the design. .slide / #title-slide rather than a bare `section` so vertical
+   stack wrappers do not add the padding a second time.
+   ------------------------------------------------------------------------ */
+.reveal .slides section.slide,
+.reveal .slides section#title-slide {
+  box-sizing: border-box;
+}
+
+.reveal .slides section.slide {
+  --rdcm-inset-left: 50px;
+  --rdcm-inset-right: 50px;
+  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
+}
+
+.reveal .slides section#title-slide {
+  --rdcm-inset-left: #{$rdcm-inset-dark-left};
+  --rdcm-inset-right: #{$rdcm-inset-dark-right};
+  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
+}
+
+/* .dark (40vmax) and .hex-loud (46vmax) carry clusters far larger than the
+   16vmax one the 210px inset was drawn against, and at that inset the top-left
+   art runs through the heading. Clear them the way the title slide does.
+   Neither was drawn as a content layout in the design — revisit if the extra
+   inset is not what you want. */
+.reveal .slides section.slide.dark,
+.reveal .slides section.slide.hex-loud {
+  --rdcm-inset-left: 50px;
+  text-align: center;
+
+  /* The measure limit further down caps body copy at 1140px inside an 1820px
+     content box; without auto margins that column stays pinned left and the
+     text would not sit under the centred heading. */
+  >p,
+  >.columns>.column>p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Lists keep their text left-aligned and centre as a block instead. The hex
+     bullets are `list-style-image` markers sitting outside the line box, so
+     centring the text itself would strand every bullet away from its item. */
+  >ul,
+  >ol {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  /* The heading rule is a block-level ::after with a fixed width (assets.css),
+     so text-align cannot centre it — auto side margins do. The shorthand there
+     still supplies the top and bottom margins. */
+  h2::after {
+    margin-left: auto;
+    margin-right: auto;
+    /* rule.svg is 6:1 in a 7:1 box, so `contain` leaves 24px slack that
+       `background-position: left` (assets.css) pushes to the right edge —
+       centring the box alone would still read 12px off. */
+    background-position: center;
+  }
+}
+
+/* section dividers sit further left and stay left-aligned */
+.reveal .slides section.title-slide.level1 {
+  --rdcm-inset-left: #{$rdcm-inset-dark-left};
+  --rdcm-inset-right: #{$rdcm-inset-dark-right};
+  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
+  text-align: left;
+}
+
+.reveal .slides section.title-slide.level1>h1 {
+  text-align: left;
+}
+
+/* .empty / .empty-navy are the bare-canvas layouts, so their insets are
+   symmetric: anything centred in them lands on the slide's centre line rather
+   than the centre of an off-centre text column. Written after the section
+   divider rule above on purpose — a `# {.empty-navy}` heading matches both,
+   and this one has to win. */
+.reveal .slides section.slide.empty,
+.reveal .slides section.slide.empty-navy {
+  --rdcm-inset-left: 50px;
+  --rdcm-inset-right: 50px;
+  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
+}
+
+/* A lone image is auto-promoted to reveal's .r-stretch, which drops the
+   .quarto-figure-center wrapper that `fig-align` normally works through — so it
+   sits flush against the left inset. Centre it explicitly. */
+.reveal .slides section img.r-stretch {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- body copy ---------------------------------------------------------
+   Child combinators only: nested lists inherit instead of compounding, and
+   callouts keep their own smaller size.
+   ------------------------------------------------------------------------ */
+.reveal .slides section.slide>p,
+.reveal .slides section.slide>ul,
+.reveal .slides section.slide>ol,
+.reveal .slides section.slide>.columns>.column>p,
+.reveal .slides section.slide>.columns>.column>ul,
+.reveal .slides section.slide>.columns>.column>ol {
+  font-size: 1.19em;
+}
+
+/* measure limit for left-aligned content; centred layouts keep the full width
+   so their text stays on the slide's centre line */
+.reveal .slides section.slide:not(.closing)>p,
+.reveal .slides section.slide:not(.closing)>ul,
+.reveal .slides section.slide:not(.closing)>ol {
+  max-width: 1140px;
+}
+
+/* ---- headings: red hex-tipped rule, no heavy bars --------------------- */
+.reveal .slides section>h2,
+.reveal .slides section>h1:not(.title) {
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  margin-bottom: 0.15em;
+  text-wrap: pretty;
+}
+
+/* heading rule, callout icons, blockquote glyph and the ATLAS plate all
+   reference bundled assets and live in assets.css — see the note there. */
+
+/* ---- quarto title slide ------------------------------------------------ */
+.reveal .slides section#title-slide {
+  text-align: left;
+  color: #ffffff;
+
+  h1.title {
+    font-size: 2.74em;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-wrap: pretty;
+  }
+
+  .subtitle {
+    color: $rdcm-light;
+    font-size: 1.15em;
+    margin: 0.35em 0 0;
+  }
+
+  p.author,
+  .quarto-title-author-name {
+    color: #e6f1f7;
+    font-weight: 400;
+    font-size: 0.97em;
+  }
+
+  p.date,
+  .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75em;
+    letter-spacing: 0.06em;
+    color: $rdcm-light;
+  }
+
+  .quarto-title-authors {
+    justify-content: flex-start;
+  }
+
+  .quarto-title-author {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  a {
+    color: $rdcm-light;
+  }
+}
+
+/* ---- optional kicker above the title ------------------------------------
+   Title-slide only. Quarto builds that slide from the YAML, so there is no
+   markdown to hang a class on; set it per-deck the same way as the ATLAS mark:
+
+     title-slide-attributes:
+       data-kicker: "r-dcm"
+
+   Off unless the attribute is present.
+   ------------------------------------------------------------------------ */
+.reveal .slides section#title-slide[data-kicker]::before {
+  content: attr(data-kicker);
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $rdcm-light;
+  margin-bottom: 0.2em;
+}
+
+/* ---- section dividers (level-1 headings) ------------------------------- */
+.reveal .slides section.title-slide,
+.reveal .slides section.dark,
+.reveal .slides section.closing,
+.reveal .slides section.thank-you,
+.reveal .slides section.empty-navy {
+  color: #ffffff;
+
+  h1,
+  h2,
+  h3 {
+    color: #ffffff;
+  }
+
+  a {
+    color: $rdcm-light;
+  }
+
+  code {
+    color: $rdcm-cream;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.reveal .slides section.title-slide h1 {
+  font-size: 2.65em;
+  letter-spacing: -0.02em;
+}
+
+/* ---- exercise slides ---------------------------------------------------
+   Body text and headings are already navy, which reads well on the light blue
+   field. Links and inline code are not: $rdcm-blue on #8ecae6 is far too low
+   contrast, so both drop to navy here.
+   ------------------------------------------------------------------------ */
+.reveal .slides section.exercise {
+  a {
+    color: $rdcm-navy;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: $rdcm-red;
+  }
+
+  :not(pre)>code {
+    color: $rdcm-navy;
+  }
+
+  /* Tabset labels, matching measr-slides: navy at rest, light blue on navy on
+     hover. The nested selector outranks the `a:hover` red above, so only the
+     tab strip picks this up — body links on exercise slides stay red. */
+  div.panel-tabset a {
+    color: $rdcm-navy;
+  }
+
+  div.panel-tabset a:hover {
+    color: $rdcm-light;
+    background: $rdcm-navy;
+  }
+}
+
+/* ---- closing / Q&A ----------------------------------------------------- */
+.reveal .slides section.closing {
+  text-align: center;
+  --rdcm-inset-left: 225px;
+  --rdcm-inset-right: 225px;
+  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
+  /* reveal marks the visible slide `display: block !important`, so the
+     vertical centring needs !important to take effect */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  h1,
+  h2 {
+    font-size: 2.82em;
+  }
+
+  .end-links {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7em;
+    text-align: left;
+    color: $rdcm-light;
+
+    /* The links are <br>-separated lines inside a single <p>, and reveal sets
+       line-height on `p` directly — an inherited value from this div would
+       never apply. Set it on the paragraph, where the gaps actually live. */
+    p {
+      line-height: 2.1;
+    }
+  }
+
+  .quarto-figure {
+    margin-bottom: 0;
+  }
+}
+
+/* ---- thank-you / get-in-touch -----------------------------------------
+   A level-1 heading, so it arrives with the section-divider rules already
+   applied — the extra .level1 here outranks them. Centred title over a
+   two-column body: something visual on the left, contact links on the right.
+   ------------------------------------------------------------------------ */
+.reveal .slides section.title-slide.level1.thank-you {
+  --rdcm-inset-left: 225px;
+  --rdcm-inset-right: 225px;
+  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
+  text-align: center;
+
+  div.cell {
+    margin-right: 0;
+  }
+
+  div.quarto-figure-center {
+    margin-bottom: 0;
+  }
+
+  .column.image {
+    padding-top: 1%;
+  }
+}
+
+.reveal .slides section.title-slide.level1.thank-you>h1 {
+  text-align: center;
+
+  a {
+    color: $rdcm-light;
+    text-decoration: none;
+  }
+}
+
+.reveal .slides .thank-you-subtitle {
+  color: #ffffff;
+  font-size: 0.8em;
+  text-align: left;
+
+  a {
+    color: $rdcm-light;
+  }
+
+  p {
+    line-height: 2em;
+  }
+}
+
+/* ---- callouts: soft, hex-marked, no boxed corporate bars ---------------
+   Quarto's own rules are written as `.reveal div.callout.callout-style-default`,
+   so these carry the extra `.slides` to outrank them rather than relying on
+   source order. Quarto 1.10 markup is
+   .callout > .callout-body > (.callout-title > .callout-icon-container > i.callout-icon)
+                            + .callout-content
+   ------------------------------------------------------------------------ */
+.reveal .slides div.callout,
+.reveal .slides div.callout.callout-style-default,
+.reveal .slides div.callout.callout-style-simple {
+  font-size: 0.93em;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55em 0.8em;
+  margin: 0.7em 0;
+  background: #f4f8fa;
+}
+
+.reveal .slides div.callout .callout-body,
+.reveal .slides div.callout .callout-title,
+.reveal .slides div.callout .callout-content {
+  background: transparent;
+  border: none;
+}
+
+/* Quarto tints the title row per callout type at
+   `.reveal div.callout.callout-tip.callout-style-default .callout-title`;
+   the extra .callout-titled here outranks it so the row stays flat. */
+.reveal .slides div.callout.callout-style-default .callout-title,
+.reveal .slides div.callout.callout-style-default.callout-titled .callout-title,
+.reveal .slides div.callout.callout-style-simple.callout-titled .callout-title {
+  background: transparent;
+  padding: 0 0 0.1em;
+}
+
+.reveal .slides div.callout .callout-title p {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* content sits flush with the icon, not indented under the title */
+.reveal .slides div.callout.callout-style-default.callout-titled .callout-content,
+.reveal .slides div.callout.callout-style-simple.callout-titled .callout-content {
+  padding: 0;
+}
+
+.reveal .slides div.callout .callout-content>p:last-child {
+  margin-bottom: 0;
+}
+
+.reveal .slides div.callout.callout-note {
+  background: rgba(142, 202, 230, 0.22);
+}
+
+.reveal .slides div.callout.callout-tip {
+  background: rgba(33, 158, 188, 0.15);
+}
+
+.reveal .slides div.callout.callout-warning {
+  background: rgba(243, 211, 189, 0.45);
+}
+
+.reveal .slides div.callout.callout-important {
+  background: rgba(215, 38, 61, 0.10);
+}
+
+/* ---- package hex sticker row ------------------------------------------- */
+.reveal .hex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0.6em 0;
+
+  img {
+    height: 3.2em;
+    width: auto;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    background: none;
+    transition: transform 0.25s ease;
+  }
+
+  img:hover {
+    transform: translateY(-6px) rotate(-5deg);
+  }
+}
+
+/* A row that is a direct child of the slide centres on the slide rather than
+   inside the text column, so it pulls back over whichever insets that slide
+   carries. Scoped to direct children on purpose: a .hex-row nested in a
+   .column inherits the same custom properties and would tear out of its
+   column, so it keeps the plain margin above. */
+.reveal .slides section>.hex-row {
+  margin-left: calc(-1 * var(--rdcm-inset-left, 0px));
+  margin-right: calc(-1 * var(--rdcm-inset-right, 0px));
+}
+
+.reveal .hex-row.large img {
+  height: 8em;
+}
+
+/* ---- footer + slide number --------------------------------------------- */
+.reveal .footer,
+.reveal .footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.05em;
+  color: $rdcm-muted;
+}
+
+/* No per-slide footer colour: Quarto renders one .footer as a direct child of
+   .reveal, outside .slides, so it cannot be selected from the current slide.
+   Reveal's own has-dark-background hook does not help either — these slides are
+   navy by stylesheet, not by data-background-color, so reveal never sees them
+   as dark. $rdcm-muted on navy is a weak 2.2:1; raise it here if that matters
+   more than matching the token on white slides.
+
+   Any change lands on every slide at once. */
+
+.reveal .progress {
+  color: $rdcm-red;
+  height: 5px;
+}
+
+/* Executed-cell output sits on the same grey as the source block, in neutral
+   grey type so it reads as output rather than as more code. */
+.reveal .slides div.cell-output pre code {
+  background-color: #efefef;
+  color: #333333;
+}
+
+/* Inline code takes $rdcm-blue per the token table. Code *blocks* stay on
+   Quarto's default highlighting — :not(pre) keeps this out of them. The dark
+   slide rules above override this to $rdcm-cream where blue is unreadable. */
+.reveal .slides :not(pre)>code {
+  color: $rdcm-blue;
+}
+
+/* ---- utilities --------------------------------------------------------- */
+.reveal .slides .center {
+  text-align: center;
+}
+
+.reveal .slides .small {
+  font-size: 0.8em;
+}
+
+.reveal .slides .smaller {
+  font-size: 0.72em;
+}
+
+.reveal .slides .large {
+  font-size: 1.2em;
+}
+
+.reveal .slides .larger {
+  font-size: 1.5em;
+}
+
+.reveal .slides .muted {
+  color: $rdcm-muted;
+}
+
+.reveal .slides .accent {
+  color: $rdcm-red;
+}
+
+.reveal .slides li {
+  margin-top: 0.55em;
+}
+
+.reveal .slides li li {
+  margin-top: 0.25em;
+  font-size: 0.9em;
+}
+
+/* Vertically centres its children. No flex-direction, so applying it to a
+   .columns block keeps the columns side by side rather than stacking them —
+   this is what `::: {.columns .v-center-container}` relies on. */
+.reveal .v-center-container {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
+.reveal .v-center-container p {
+  margin: 0 !important;
+}
+
+.reveal blockquote {
+  border: none;
+  background: transparent;
+  padding: 0 0 0 1.2em;
+  font-style: normal;
+  box-shadow: none;
+  position: relative;
+}
+
+.reveal table {
+  font-size: 0.72em;
+  border-collapse: collapse;
+}
+
+.reveal table th {
+  border-bottom: 3px solid $rdcm-blue;
+  background: transparent;
+}
+
+.reveal table td {
+  border-bottom: 1px solid rgba(2, 48, 71, 0.12);
+}

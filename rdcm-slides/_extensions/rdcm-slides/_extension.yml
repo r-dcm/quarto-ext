@@ -1,0 +1,21 @@
+title: r-dcm Slides
+author: W. Jake Thompson
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  format:
+    common:
+      shortcodes:
+        - quarto-ext/fontawesome
+        - mcanouil/iconify
+        - gadenbuie/countdown
+    revealjs:
+      revealjs-plugins:
+        - mcanouil/tabset
+      theme: [default, theme.scss]
+      css: [hexagons.css, lists.css, assets.css]
+      highlight-style: a11y-light
+      preview-links: auto
+      width: 1920
+      height: 1080
+      slide-number: false

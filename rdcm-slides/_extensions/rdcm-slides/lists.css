@@ -1,0 +1,63 @@
+/* ---------------------------------------------------------------------------
+   r-dcm slides — list bullets
+
+   Drawn with ::before rather than list-style-image. A marker set that way
+   renders at the SVG's own intrinsic size and CSS has no lever to scale it —
+   there is no list-style-size, and ::marker will not size an image. A
+   background image on a generated box can be sized, so --rdcm-bullet-size is
+   the one number to turn.
+
+   Paths point at hex/ and this file is linked in place from
+   _extensions/rdcm-slides/, so they resolve — see the note in assets.css.
+   --------------------------------------------------------------------------- */
+
+.reveal .slides ul {
+  --rdcm-bullet-size: 0.62em;
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+.reveal .slides ul>li {
+  position: relative;
+}
+
+.reveal .slides ul>li::before {
+  content: "";
+  position: absolute;
+  left: -1.05em;
+  /* half the 1.3 line box less half the marker: centres on the first line and
+     stays put when the item wraps */
+  top: calc(0.65em - var(--rdcm-bullet-size) / 2);
+  width: var(--rdcm-bullet-size);
+  height: var(--rdcm-bullet-size);
+  background: url("hex/bullet-blue.svg") no-repeat center;
+  background-size: contain;
+}
+
+/* nested lists: open hexagon, same size as the top level */
+.reveal .slides ul ul>li::before {
+  background-image: url("hex/bullet-open.svg");
+}
+
+.reveal .slides .exercise ul>li::before {
+  background-image: url("hex/bullet-navy.svg");
+}
+
+.reveal .slides .dark ul>li::before,
+.reveal .slides .closing ul>li::before,
+.reveal .slides .empty-navy ul>li::before {
+  background-image: url("hex/bullet-cream.svg");
+}
+
+/* The tabset plugin builds its tab strip as a <ul>, so the rules above would
+   put a hexagon beside every tab label and indent the strip. Quarto's own
+   `list-style: none` cannot suppress a generated ::before, and its `padding: 0`
+   loses to the ul rule above, so both need undoing explicitly. Matched on the
+   class rather than [role="tablist"], which tabby only adds once JS runs. */
+.reveal .slides ul.panel-tabset-tabby {
+  padding-left: 0;
+}
+
+.reveal .slides ul.panel-tabset-tabby>li::before {
+  content: none;
+}
