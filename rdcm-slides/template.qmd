@@ -3,34 +3,7 @@ title: "Diagnostic classification models in R"
 subtitle: "A tour of the r-dcm suite"
 author: "W. Jake Thompson"
 date: today
-format:
-  rdcm-slides-revealjs:
-    progress: false
-code-link: true
-preload-iframes: true
-code-annotations: select
-engine: knitr
-execute:
-  echo: false
-  messsage: true
-  warning: true
-knitr:
-  opts_chunk: 
-    digits: 3
-    comment: "#>"
-    fig-align: "center"
-    fig-width: 7
-    fig-asp: 0.618
-    out-width: 90%
-    collapse: true
-countdown:
-  color_border: "#023047"
-  color_background: "#023047"
-  color_text: "#8ECAE6"
-  color_running_background: "#023047"
-  color_running_text: "#8ECAE6"
-  color_finished_background: "#D7263D"
-  color_finished_text: "#FFFFFF"
+format: rdcm-slides-revealjs
 # Optional title-slide extras:
 # title-slide-attributes:
 #   data-kicker: "r-dcm"    # small mono kicker above the title

@@ -9,6 +9,29 @@ contributes:
         - quarto-ext/fontawesome
         - mcanouil/iconify
         - gadenbuie/countdown
+      code-link: true
+      code-annotations: select
+      execute:
+        echo: false
+        message: true
+        warning: true
+      knitr:
+        opts_chunk:
+          digits: 3
+          comment: "#>"
+          fig-align: "center"
+          fig-width: 7
+          fig-asp: 0.618
+          out-width: 90%
+          collapse: true
+      countdown:
+        color_border: "#023047"
+        color_background: "#023047"
+        color_text: "#8ECAE6"
+        color_running_background: "#023047"
+        color_running_text: "#8ECAE6"
+        color_finished_background: "#D7263D"
+        color_finished_text: "#FFFFFF"
     revealjs:
       revealjs-plugins:
         - mcanouil/tabset
@@ -16,6 +39,8 @@ contributes:
       css: [hexagons.css, lists.css, assets.css]
       highlight-style: a11y-light
       preview-links: auto
+      preload-iframes: true
+      progress: false
       width: 1920
       height: 1080
       slide-number: false
