@@ -98,17 +98,17 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: 1.75em;
-  width: 14.1em;
-  height: 3.3em;
+  bottom: 2em;
+  width: 16.4em;
+  height: 3.85em;
   background: #ffffff url("figure/atlas-horiz.png") no-repeat center / 84% auto;
   border-radius: 8px;
   box-shadow: 0 2px 14px rgba(2, 48, 71, 0.35);
 }
 
 .reveal .slides section#title-slide[data-atlas="vertical"]::after {
-  width: 8.8em;
-  height: 8.8em;
+  width: 10.25em;
+  height: 10.25em;
   background-image: url("figure/atlas-vert.png");
   background-size: 76% auto;
 }

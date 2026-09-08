@@ -65,6 +65,18 @@ $btn-code-copy-color-active: $rdcm-blue;
   --rdcm-inset-left: #{$rdcm-inset-dark-left};
   --rdcm-inset-right: #{$rdcm-inset-dark-right};
   padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
+
+  /* Quarto centres the title slide by giving it reveal's .center treatment,
+     which shrinks the section to the height of the title block and offsets it
+     from the top. Anything absolutely positioned against the section — the
+     ATLAS plate in assets.css — is then anchored to that short box and lands
+     level with the subtitle instead of in the slide corner. Fill the slide and
+     centre the content here instead, the way .closing does; reveal marks the
+     visible slide `display: block !important`, hence the !important. */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 /* .dark (40vmax) and .hex-loud (46vmax) carry clusters far larger than the
