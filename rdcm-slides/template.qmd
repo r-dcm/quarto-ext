@@ -259,6 +259,31 @@ Cream field — a lighter flag.
 The hex glyph is drawn with `blockquote::before` — no rule, no italics, no
 quotation marks.
 
+# [**r-dcm.org**](https://r-dcm.org) {.closing data-menu-title="Get in touch"}
+
+:::{.columns .v-center-container}
+:::{.column width="60%"}
+```{r}
+#| label: big-image
+#| out-width: 50%
+```
+
+:::
+
+:::{.column .end-links width="40%"}
+{{< iconify fa6-solid globe >}} \ [wjakethompson.com](https://wjakethompson.com)  
+{{< iconify fa6-solid envelope >}} \ [wjakethompson@ku.edu](mailto:wjakethompson@ku.edu)  
+{{< iconify fa6-brands linkedin >}} \ [in/wjakethompson](https://linkedin.com/in/wjakethompson)  
+{{< iconify fa6-brands github >}} \ [@wjakethompson](https://github.com/wjakethompson)  
+{{< iconify fa6-brands mastodon >}} \ [@wjakethompson@fosstodon.org](https://fosstodon.org/@wjakethompson)  
+{{< iconify fa6-brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)  
+{{< iconify fa6-brands threads >}} \ [@wjakethompson](https://www.threads.net/@wjakethompson)  
+{{< iconify fa6-brands x-twitter >}} \ [@wjakethompson](https://twitter.com/wjakethompson)  
+
+:::
+
+:::
+
 ## [**r-dcm.org**](https://r-dcm.org) {.closing data-menu-title="Get in touch"}
 
 :::{.columns .v-center-container}

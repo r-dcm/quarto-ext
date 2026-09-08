@@ -42,6 +42,13 @@
   margin-right: auto;
 }
 
+/* a level-1 closing heading matches `section.title-slide > h1::after` above,
+   which sets only a top margin; give it the same margins as the h2 rule so
+   `# … {.closing}` spaces exactly like `## … {.closing}` */
+.reveal .slides section.closing > h1::after {
+  margin: 0.42em auto 0.62em;
+}
+
 /* ---- callout icons ------------------------------------------------------
    Quarto sets a per-type Bootstrap glyph at
    `.reveal div.callout.callout-note .callout-icon::before`. These match that

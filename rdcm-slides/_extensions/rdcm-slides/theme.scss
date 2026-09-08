@@ -350,6 +350,24 @@ $btn-code-copy-color-active: $rdcm-blue;
   }
 }
 
+/* Written as `# … {.closing}` the slide also picks up the section-divider
+   rules above (Quarto adds .title-slide.level1), which pull it back to the
+   dark insets and left-align both the section and its heading. These carry the
+   extra .closing so a level-1 closing slide renders exactly like a level-2
+   one. */
+.reveal .slides section.title-slide.level1.closing {
+  --rdcm-inset-left: 225px;
+  --rdcm-inset-right: 225px;
+  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
+  text-align: center;
+}
+
+.reveal .slides section.title-slide.level1.closing>h1 {
+  text-align: center;
+  /* the section-divider h1 sets its own tracking; match the h2 headings */
+  letter-spacing: -0.015em;
+}
+
 /* ---- thank-you / get-in-touch -----------------------------------------
    A level-1 heading, so it arrives with the section-divider rules already
    applied — the extra .level1 here outranks them. Centred title over a

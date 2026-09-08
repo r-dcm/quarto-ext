@@ -116,6 +116,21 @@
   animation: rdcm-drift-b 20s ease-in-out infinite;
 }
 
+/* A `# … {.closing}` slide is a level-1 heading, so its background carries
+   .title-slide as well and the two section-divider rules above — written later
+   at the same specificity — replace the closing art. The extra .closing here
+   outranks them, so the dark cluster (with its red accents) is used whichever
+   heading level the closing slide is written at. */
+.reveal .slide-background.title-slide.closing .slide-background-content::before {
+  background-image: url("hex/dark-tl.svg");
+  animation: rdcm-drift-a 22s ease-in-out infinite;
+}
+
+.reveal .slide-background.title-slide.closing .slide-background-content::after {
+  background-image: url("hex/dark-br.svg");
+  animation: rdcm-drift-b 26s ease-in-out infinite;
+}
+
 @keyframes rdcm-drift-a {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50%      { transform: translate(1.1vmax, -0.9vmax) rotate(-0.6deg); }
