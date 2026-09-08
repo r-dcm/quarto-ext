@@ -10,8 +10,6 @@ format: rdcm-slides-revealjs
 #   data-atlas: "true"      # ATLAS signature ("true" or "vertical")
 ---
 
-# Section title
-
 ```{r}
 #| label: setup
 #| include: false
@@ -21,9 +19,107 @@ library(ggmeasr)
 library(knitr)
 library(measr)
 library(here)
+library(gt)
+library(gtExtras)
 
 set_theme(plot_margin = margin(5, 0, 0, 0))
+
+# gt theme ---------------------------------------------------------------------
+gt_theme_rdcm <- function(gt_dat, bg_color = "#FFFFFF", ...) {
+  gt_dat |>
+    gt::opt_all_caps() |>
+    gt::opt_table_font(
+      font = list(gt::google_font("Open Sans"), gt::default_fonts())
+    ) |>
+    gt::tab_options(
+      column_labels.background.color = bg_color,
+      column_labels.border.top.width = gt::px(3),
+      column_labels.border.top.color = bg_color,
+      table.border.top.width = gt::px(1),
+      table.border.bottom.width = gt::px(1),
+      heading.align = "left",
+      heading.background.color = bg_color,
+      source_notes.padding = gt::px(10),
+      source_notes.border.lr.width = gt::px(0),
+      source_notes.font.size = 12,
+      source_notes.background.color = bg_color,
+      table.font.size = 16,
+      data_row.padding = gt::px(3),
+      table.background.color = bg_color,
+      ...
+    ) |>
+    gt::tab_style(
+      style = gt::cell_borders(
+        sides = "bottom",
+        color = "transparent",
+        weight = gt::px(2)
+      ),
+      locations = gt::cells_body(
+        columns = gt::everything(),
+        rows = nrow(gt_dat$`_data`)
+      )
+    ) |>
+    gt::tab_style(
+      style = list(
+        gt::cell_text(
+          weight = "bold",
+          align = "center",
+          v_align = "middle",
+          color = msr_colors[2]
+        ),
+        gt::cell_borders(
+          sides = "bottom",
+          color = msr_colors[2],
+          weight = gt::px(3)
+        )
+      ),
+      locations = gt::cells_column_labels(gt::everything())
+    ) |>
+    gt::tab_style(
+      style = gt::cell_fill(color = bg_color),
+      locations = list(gt::cells_body(
+        columns = gt::everything(),
+        rows = gt::everything()
+      ))
+    )
+}
 ```
+
+## Who am I?
+
+:::{.columns}
+:::{.column width="50%"}
+<br>W. Jake Thompson, Ph.D.
+
+* Assistant Director of Psychometrics
+  * [ATLAS](https://atlas.ku.edu) | University of Kansas
+
+* Research: Applications of diagnostic psychometric models
+  * Lead psychometrician and Co-PI for the [Dynamic Learnings Maps](https://dynamiclearningmaps.org) assessments
+  * PI for an [IES-funded](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546) project to develop software for diagnostic models
+:::
+
+:::{.column width="50%"}
+:::{.center}
+
+```{r}
+#| label: profile-picture
+#| out-width: 50%
+#| fig-alt: |
+#|   Profile picture for Jake Thompson.
+
+include_graphics("figure/wjt-2022-hex.png")
+```
+
+:::{.end-links .centered}
+{{< iconify fa6-brands github >}} \ [@wjakethompson](https://www.gitub.com/wjakethompson)  
+{{< iconify fa6-brands bluesky >}} \ [@wjakethompson.com](https://bsky.app/profile/wjakethompson.com)
+:::
+:::
+:::
+:::
+
+# Section title
 
 ## Default Slide
 

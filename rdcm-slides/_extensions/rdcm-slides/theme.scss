@@ -252,6 +252,39 @@ $btn-code-copy-color-active: $rdcm-blue;
   margin-bottom: 0.2em;
 }
 
+/* ---- .end-links --------------------------------------------------------
+   A monospaced contact block: icon, then link, one per line. Written as a
+   free-standing rule rather than inside .closing so it can be used on any
+   slide — a `## Who am I?` intro, a resources slide, a column beside a figure.
+   Colour is left to inherit: navy on the light content slides, and retinted
+   to light blue by the dark-slide block below.
+   ------------------------------------------------------------------------ */
+.reveal .slides .end-links {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7em;
+  text-align: left;
+
+  /* The links are <br>-separated lines inside a single <p>, and reveal sets
+     line-height on `p` directly — an inherited value from this div would
+     never apply. Set it on the paragraph, where the gaps actually live. */
+  p {
+    line-height: 2.1;
+  }
+}
+
+/* `.end-links.centered` — centred under a figure. Two things have to happen:
+   `width: fit-content` shrinks the div to its longest line so the auto margins
+   have something to centre, and `text-align: center` overrides the left
+   alignment of the base rule so the lines centre inside that box rather than
+   stacking against its left edge. */
+.reveal .slides .end-links.centered {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 /* ---- section dividers (level-1 headings) ------------------------------- */
 .reveal .slides section.title-slide,
 .reveal .slides section.dark,
@@ -273,6 +306,12 @@ $btn-code-copy-color-active: $rdcm-blue;
   code {
     color: $rdcm-cream;
     background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* The icons and any plain text between the links are ordinary inline
+     content, so on a navy field they need the tint the links already have. */
+  .end-links {
+    color: $rdcm-light;
   }
 }
 
@@ -329,20 +368,6 @@ $btn-code-copy-color-active: $rdcm-blue;
   h1,
   h2 {
     font-size: 2.82em;
-  }
-
-  .end-links {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7em;
-    text-align: left;
-    color: $rdcm-light;
-
-    /* The links are <br>-separated lines inside a single <p>, and reveal sets
-       line-height on `p` directly — an inherited value from this div would
-       never apply. Set it on the paragraph, where the gaps actually live. */
-    p {
-      line-height: 2.1;
-    }
   }
 
   .quarto-figure {
