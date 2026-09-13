@@ -32,7 +32,7 @@ $rdcm-inset-dark-left: 495px;
 $rdcm-inset-dark-right: 225px;
 
 /* code blocks — grey field with a navy hairline, matching measr-slides */
-$code-font-size: 1.2em;
+$code-font-size: 1.4em;
 /* Quarto derives inline code as $code-font-size * 0.875, which lands 5% above
    the surrounding copy. Pin it to 1em so inline code matches the text it sits
    in; code blocks keep $code-font-size. */
