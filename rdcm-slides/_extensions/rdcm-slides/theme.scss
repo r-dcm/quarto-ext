@@ -600,6 +600,12 @@ $btn-code-copy-color-active: $rdcm-blue;
 }
 
 /* ---- utilities --------------------------------------------------------- */
+.reveal .slides .spaced {
+  p {
+    line-height: 2em;
+  }
+}
+
 .reveal .slides .center {
   text-align: center;
 }
