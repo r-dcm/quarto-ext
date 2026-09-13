@@ -645,15 +645,17 @@ $btn-code-copy-color-active: $rdcm-blue;
 
 /* Vertically centres its children. No flex-direction, so applying it to a
    .columns block keeps the columns side by side rather than stacking them —
-   this is what `::: {.columns .v-center-container}` relies on. */
+   this is what `::: {.columns .v-center-container}` relies on.
+   min-height (not height) so tall content grows the box rather than
+   overflowing it symmetrically and colliding with the slide title. */
 .reveal .v-center-container {
   display: flex !important;
   justify-content: center;
   align-items: center;
-  height: 50%;
+  min-height: 50%;
 }
 
-.reveal .v-center-container p {
+.reveal .v-center-container p:not(.spaced p) {
   margin: 0 !important;
 }
 
