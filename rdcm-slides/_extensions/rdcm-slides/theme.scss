@@ -634,12 +634,19 @@ $btn-code-copy-color-active: $rdcm-blue;
   color: $rdcm-red;
 }
 
-.reveal .slides li {
-  margin-top: 0.55em;
+/* Space out level-one bullets; keep nested bullets tight beneath their parent.
+   Quarto injects `.reveal .slide ul li { margin-top: 0.4em; margin-bottom: 0.2em }`
+   as an inline <style> *after* this theme, so equal specificity loses — the
+   extra `.slides` here out-ranks it without `!important`. */
+.reveal .slides .slide ul > li,
+.reveal .slides .slide ol > li {
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
-.reveal .slides li li {
-  margin-top: 0.25em;
+.reveal .slides .slide li li {
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 0.9em;
 }
 
