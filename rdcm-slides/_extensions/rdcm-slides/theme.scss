@@ -55,16 +55,23 @@ $btn-code-copy-color-active: $rdcm-blue;
   box-sizing: border-box;
 }
 
-.reveal .slides section.slide {
+/* Every layout below only sets the four inset variables; the padding itself
+   is written once here (and once more in the print block at the end of this
+   file, where reveal zeroes it). */
+.reveal .slides section.slide,
+.reveal .slides section#title-slide {
+  --rdcm-inset-top: 96px;
+  --rdcm-inset-bottom: 66px;
   --rdcm-inset-left: 50px;
   --rdcm-inset-right: 50px;
-  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
+  padding: var(--rdcm-inset-top) var(--rdcm-inset-right) var(--rdcm-inset-bottom) var(--rdcm-inset-left);
 }
 
 .reveal .slides section#title-slide {
+  --rdcm-inset-top: 0px;
+  --rdcm-inset-bottom: 0px;
   --rdcm-inset-left: #{$rdcm-inset-dark-left};
   --rdcm-inset-right: #{$rdcm-inset-dark-right};
-  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
 
   /* Quarto centres the title slide by giving it reveal's .center treatment,
      which shrinks the section to the height of the title block and offsets it
@@ -126,9 +133,10 @@ $btn-code-copy-color-active: $rdcm-blue;
 
 /* section dividers sit further left and stay left-aligned */
 .reveal .slides section.title-slide.level1 {
+  --rdcm-inset-top: 0px;
+  --rdcm-inset-bottom: 0px;
   --rdcm-inset-left: #{$rdcm-inset-dark-left};
   --rdcm-inset-right: #{$rdcm-inset-dark-right};
-  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
   text-align: left;
 }
 
@@ -143,9 +151,10 @@ $btn-code-copy-color-active: $rdcm-blue;
    and this one has to win. */
 .reveal .slides section.slide.empty,
 .reveal .slides section.slide.empty-navy {
+  --rdcm-inset-top: 96px;
+  --rdcm-inset-bottom: 66px;
   --rdcm-inset-left: 50px;
   --rdcm-inset-right: 50px;
-  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
 }
 
 /* A lone image is auto-promoted to reveal's .r-stretch, which drops the
@@ -367,9 +376,10 @@ $btn-code-copy-color-active: $rdcm-blue;
 /* ---- closing / Q&A ----------------------------------------------------- */
 .reveal .slides section.closing {
   text-align: center;
+  --rdcm-inset-top: 0px;
+  --rdcm-inset-bottom: 0px;
   --rdcm-inset-left: 225px;
   --rdcm-inset-right: 225px;
-  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
   /* reveal marks the visible slide `display: block !important`, so the
      vertical centring needs !important to take effect */
   display: flex !important;
@@ -393,9 +403,10 @@ $btn-code-copy-color-active: $rdcm-blue;
    extra .closing so a level-1 closing slide renders exactly like a level-2
    one. */
 .reveal .slides section.title-slide.level1.closing {
+  --rdcm-inset-top: 0px;
+  --rdcm-inset-bottom: 0px;
   --rdcm-inset-left: 225px;
   --rdcm-inset-right: 225px;
-  padding: 0 var(--rdcm-inset-right) 0 var(--rdcm-inset-left);
   text-align: center;
 }
 
@@ -411,9 +422,10 @@ $btn-code-copy-color-active: $rdcm-blue;
    two-column body: something visual on the left, contact links on the right.
    ------------------------------------------------------------------------ */
 .reveal .slides section.title-slide.level1.thank-you {
+  --rdcm-inset-top: 96px;
+  --rdcm-inset-bottom: 66px;
   --rdcm-inset-left: 225px;
   --rdcm-inset-right: 225px;
-  padding: 96px var(--rdcm-inset-right) 66px var(--rdcm-inset-left);
   text-align: center;
 
   div.cell {
@@ -687,4 +699,41 @@ $btn-code-copy-color-active: $rdcm-blue;
 
 .reveal table td {
   border-bottom: 1px solid rgba(2, 48, 71, 0.12);
+}
+
+/* ---- PDF export (?print-pdf) -------------------------------------------
+   Reveal's print stylesheet resets every slide with
+   `html.reveal-print .reveal .slides section { padding: 0 !important; ... }`,
+   which throws away the insets above: headings land in the corner over the
+   hex art and section dividers lose their offset. These selectors carry one
+   more class than reveal's, so their !important wins and the on-screen
+   geometry comes back.
+
+   Reveal also measures each slide's height *before* it is wrapped in its
+   .pdf-page — when `height: 100%` on the flex-centred layouts resolves to
+   nothing — and then writes an inline `top` to centre that too-short box.
+   Once inside the page the box grows back to full height and the centred
+   content is carried down with it. Pin those slides to the top of the page
+   and let the flex centring do the work against the real page height. The
+   display is restated because reveal's `display: block !important` outranks
+   the plain `.reveal .slides section.closing` selector above.
+   ------------------------------------------------------------------------ */
+html.reveal-print .reveal .slides section.slide,
+html.reveal-print .reveal .slides section#title-slide {
+  padding: var(--rdcm-inset-top) var(--rdcm-inset-right) var(--rdcm-inset-bottom) var(--rdcm-inset-left) !important;
+}
+
+html.reveal-print .reveal .slides section#title-slide,
+html.reveal-print .reveal .slides section.slide.dark,
+html.reveal-print .reveal .slides section.slide.hex-loud,
+html.reveal-print .reveal .slides section.slide.closing {
+  display: flex !important;
+  top: 0 !important;
+  height: 100% !important;
+}
+
+/* The drift keyframes have no business in a static export. */
+html.reveal-print .reveal .slide-background-content::before,
+html.reveal-print .reveal .slide-background-content::after {
+  animation: none !important;
 }

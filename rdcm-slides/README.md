@@ -85,6 +85,27 @@ in the first column and contact links in a `.end-links` block:
 :::
 ```
 
+## PDF export
+
+Open the rendered deck with `?print-pdf` appended to the URL (for example
+`template.html?print-pdf`), wait for it to finish loading, then print to PDF
+from Chrome with margins set to none and background graphics on. The format
+carries print-specific rules so the exported pages match the on-screen
+layout — title slide centred, section dividers offset, headings clear of the
+hexagon art.
+
+If you edit the theme, keep that working:
+
+- Slide margins are set only through the `--rdcm-inset-top/right/bottom/left`
+  custom properties. A new layout should set those rather than `padding`;
+  reveal's print stylesheet zeroes `padding` on every slide and the theme's
+  `html.reveal-print` block restores it from the variables.
+- Layouts that centre content with `display: flex` and `height: 100%` must be
+  added to that print block, otherwise reveal's pre-measured `top` offset
+  pushes their content to the bottom of the page.
+- Check the export after a layout change; `template.qmd` should print to 29
+  pages with every slide matching the screen render.
+
 ## Snippets
 
 Blockquote — hex glyph, no rule and no quotation marks:
