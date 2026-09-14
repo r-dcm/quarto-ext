@@ -184,9 +184,9 @@
   content: none;
 }
 
-/* .hex-quiet — keep one small cluster only, for busy figures */
-.reveal .slide-background.hex-quiet .slide-background-content::before { content: none; }
-.reveal .slide-background.hex-quiet .slide-background-content::after { --rdcm-hex-s: 18vmax; opacity: 0.7; }
+/* .hex-quiet — keep the small top-left cluster only, for busy figures */
+.reveal .slide-background.hex-quiet .slide-background-content::before { --rdcm-hex-s: 13vmax; opacity: 0.7; }
+.reveal .slide-background.hex-quiet .slide-background-content::after { content: none; }
 
 /* .hex-loud — oversized clusters for statement slides */
 .reveal .slide-background.hex-loud .slide-background-content::before,

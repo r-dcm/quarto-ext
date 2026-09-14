@@ -21,7 +21,7 @@ quarto use template r-dcm/quarto-ext/rdcm-slides
 | `.closing` | Navy, centred — Q&A / thank-you |
 | `.empty` | No hexagons at all (white); symmetric margins, so centred figures land on the slide's centre |
 | `.empty-navy` | Same bare canvas on the navy field |
-| `.hex-quiet` | Single small cluster — use behind wide figures |
+| `.hex-quiet` | Top-left cluster only, slightly shrunk; bottom-right suppressed — use behind wide figures |
 | `.hex-loud` | Oversized clusters for statement slides |
 | `.exercise` | Light blue field with navy/red clusters — signals "your turn" |
 | `.thank-you` | Navy closing slide: centred title over a two-column body (visual left, contacts right) |
